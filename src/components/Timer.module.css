@@ -66,9 +66,9 @@
 
 .presetButton {
   padding: var(--spacing-xs) var(--spacing-lg);
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--preset-button-bg, rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--preset-button-border, rgba(255, 255, 255, 0.4));
   border-radius: var(--radius-full);
   color: var(--text-presets, var(--color-btns-reloj, #516091));
   font-size: 0.875rem;
@@ -80,8 +80,8 @@
 }
 
 .presetButton:hover {
-  background: rgba(255, 255, 255, 0.35);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--preset-button-hover-bg, rgba(255, 255, 255, 0.35));
+  border-color: var(--preset-button-border, rgba(255, 255, 255, 0.5));
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -134,12 +134,12 @@
 }
 
 .progressBackground {
-  stroke: rgba(116, 179, 193, 0.3);
+  stroke: var(--progress-background-color, rgba(116, 179, 193, 0.3));
   transition: stroke var(--transition-base);
 }
 
 .progressBar {
-  stroke: var(--color-segundero);
+  stroke: var(--progress-bar-color, var(--color-segundero));
   stroke-linecap: round;
   transition: stroke-dashoffset 0.5s ease, stroke var(--transition-base);
   filter: drop-shadow(0 0 2px rgba(116, 179, 193, 0.5));
@@ -336,10 +336,11 @@
 .icon {
   width: 35px;
   height: 35px;
-  filter: invert();
+  color: #ffffff;
   position: relative;
   z-index: 1;
   transition: transform var(--transition-base);
+  display: block;
 }
 
 .editButton:hover .icon,

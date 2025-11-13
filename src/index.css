@@ -49,10 +49,8 @@
 }
 
 html {
-  overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-  height: auto;
 }
 
 body {
@@ -65,8 +63,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background 0.3s ease;
   overflow-x: hidden;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Only apply min-height on mobile to prevent extra space on desktop/tablet */
+@media screen and (max-width: 599px) {
+  body {
+    min-height: 100vh;
+  }
 }
 
 #root {
@@ -74,6 +78,13 @@ body {
   display: flex;
   flex-direction: column;
   overflow: visible;
+}
+
+/* Only apply min-height on mobile */
+@media screen and (max-width: 599px) {
+  #root {
+    min-height: 100vh;
+  }
 }
 
 /* Improve touch scrolling on mobile */

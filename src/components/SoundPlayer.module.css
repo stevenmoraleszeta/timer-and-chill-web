@@ -121,10 +121,11 @@
 .icon {
   width: 18px;
   height: 18px;
-  filter: invert();
+  color: #ffffff;
   position: relative;
   z-index: 1;
   transition: transform var(--transition-base);
+  display: block;
 }
 
 .playButton:hover .icon,

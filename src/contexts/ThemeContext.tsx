@@ -24,9 +24,9 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  // Load theme from localStorage or use night mode as default
+  // Load theme from localStorage or use day mode as default
   const savedTheme = storage.getTheme()
-  const [theme, setTheme] = useState<Theme>(savedTheme || 'night')
+  const [theme, setTheme] = useState<Theme>(savedTheme || 'day')
 
 
   const colors = THEME_COLORS[theme]
@@ -54,10 +54,27 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     root.style.setProperty('--stats-item-bg', theme === 'day' ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 255, 255, 0.1)')
     root.style.setProperty('--stats-item-border', theme === 'day' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)')
     root.style.setProperty('--stats-divider', theme === 'day' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.2)')
-    // Gradient for theme toggle button: more visible in day mode, elegant in night mode
+    // Background for preset buttons in day mode: light green
+    root.style.setProperty('--preset-button-bg', theme === 'day' 
+      ? 'rgba(173, 235, 190, 0.4)' 
+      : 'rgba(255, 255, 255, 0.25)');
+    root.style.setProperty('--preset-button-border', theme === 'day' 
+      ? 'rgba(173, 235, 190, 0.6)' 
+      : 'rgba(255, 255, 255, 0.4)');
+    root.style.setProperty('--preset-button-hover-bg', theme === 'day' 
+      ? 'rgba(173, 235, 190, 0.5)' 
+      : 'rgba(255, 255, 255, 0.35)');
+    // Progress bar color: lighter in day mode
+    root.style.setProperty('--progress-bar-color', theme === 'day' 
+      ? '#adebbe' 
+      : colors.segundero);
+    root.style.setProperty('--progress-background-color', theme === 'day' 
+      ? 'rgba(173, 235, 190, 0.4)' 
+      : 'rgba(116, 179, 193, 0.3)');
+    // Gradient for theme toggle button: modern and elegant
     root.style.setProperty('--theme-toggle-gradient', theme === 'day' 
-      ? 'linear-gradient(135deg, #516091 0%, #6b7fa8 50%, #8fa3c4 100%)' 
-      : 'linear-gradient(135deg, var(--color-btn-dia-noche) 0%, #d4db80 100%)')
+      ? 'linear-gradient(135deg, #516091 0%, #6b7fa8 100%)' 
+      : 'linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #718096 100%)');
     
     // Apply background to body
     const body = document.body

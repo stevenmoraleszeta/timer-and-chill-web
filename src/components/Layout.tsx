@@ -12,8 +12,8 @@ export const Layout: React.FC = () => {
     <div className={styles.container}>
       {/* Activity text row - thin bar at the very top */}
       <div className={styles.activityBar}>
-        <AnimatedText />
         <ThemeToggle />
+        <AnimatedText />
       </div>
 
       <main className={styles.main}>
