@@ -105,14 +105,16 @@ pnpm preview
 ```
 timer-and-chill-prototype/
 │
-├── public/                  # Static assets (audio files)
-│   └── audio/              # Ambient sound files
+├── public/                  # Static assets served directly
+│   ├── audio/              # Ambient sound files (served at /audio/)
+│   ├── images/             # Static images (e.g., notification icons)
+│   └── favicon.png         # Site favicon
 │
-├── src/
-│   ├── assets/             # Assets (images, etc.)
-│   │   └── images/        # Image files
+├── src/                     # Source code
+│   ├── assets/             # Assets processed by bundler
+│   │   └── images/        # Component images (icons, UI elements)
 │   │
-│   ├── components/         # React components
+│   ├── components/         # React components (with CSS Modules)
 │   │   ├── AnimatedText.tsx
 │   │   ├── ErrorBoundary.tsx
 │   │   ├── Header.tsx
@@ -122,14 +124,14 @@ timer-and-chill-prototype/
 │   │   ├── ThemeToggle.tsx
 │   │   └── Timer.tsx
 │   │
-│   ├── contexts/           # React contexts
+│   ├── contexts/           # React context providers
 │   │   └── ThemeContext.tsx
 │   │
 │   ├── hooks/              # Custom React hooks
 │   │   ├── useAudio.ts
 │   │   └── useTimer.ts
 │   │
-│   ├── types/              # TypeScript types
+│   ├── types/              # TypeScript type definitions
 │   │   └── index.ts
 │   │
 │   ├── utils/              # Utility functions
@@ -141,15 +143,18 @@ timer-and-chill-prototype/
 │   ├── App.tsx             # Root component
 │   ├── App.module.css      # Root component styles
 │   ├── main.tsx            # Application entry point
-│   ├── index.css           # Global styles
+│   ├── index.css           # Global styles and CSS variables
 │   └── vite-env.d.ts      # Vite type declarations
 │
 ├── index.html              # HTML template
 ├── package.json            # Dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
+├── tsconfig.node.json      # TypeScript config for Node.js tools
 ├── vite.config.ts          # Vite configuration
 └── README.md               # This file
 ```
+
+**Note:** This project follows React best practices with a clean, modular structure. All legacy folders (JS/, CSS/, IMG/, AUDIO/) have been removed in favor of the modern React/Vite architecture.
 
 ## 📋 Features
 
@@ -366,6 +371,8 @@ See [LICENSE](LICENSE) file for full details.
 - 📱 Improved responsive design
 - 🚀 Performance optimizations
 - 🛡️ Error boundaries and error handling
+- 🧹 Project structure cleanup (removed legacy folders)
+- 📁 Reorganized assets following React best practices
 
 ### Version 1.0.0
 - Initial vanilla JavaScript release
