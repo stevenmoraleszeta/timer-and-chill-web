@@ -18,15 +18,11 @@ body {
     transition: background-color 3s;
 }
 
-.grid-container {}
-
 .grid__header-container {
     background-color: var(--color-header);
     border-bottom: 5px solid var(--color-borde-header);
     transition: background-color 3s, border-bottom 3s;
 }
-
-.typed {}
 
 .btn-dia-noche-container {
     background: var(--color-btns-reloj);
@@ -44,12 +40,6 @@ body {
 .img-btn-dia-noche {
     filter: invert();
 }
-
-.grid__main-container {}
-
-.img-hojas {}
-
-.grid__reloj-container {}
 
 .reloj-principal {
     background-color: var(--color-fondo-reloj);
@@ -100,7 +90,7 @@ body {
 }
 
 .img-btn-modificar {
-    filter: invert()
+    filter: invert();
 }
 
 .btn-reset {
@@ -121,10 +111,8 @@ body {
 }
 
 .img-btn-play {
-    filter: invert()
+    filter: invert();
 }
-
-.container-sonidos {}
 
 .contenedor-sonido {
     background-color: #adebbe;
@@ -150,4 +138,35 @@ body {
 
 .volumen-sonido {
     filter: saturate(0.5);
+}
+
+/* Accessibility: Focus states */
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--color-segundero);
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Improve button accessibility */
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Improve range slider accessibility */
+.volumen-sonido {
+    cursor: pointer;
+}
+
+.volumen-sonido:focus-visible {
+    outline: 2px solid var(--color-segundero);
+    outline-offset: 2px;
 }

@@ -1,31 +1,10 @@
-.btn-reset:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
-}
-
-.btn-modificar:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
-}
-
-.btn-play:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
-}
-
-.btn-reset:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
-}
-
-.btn-dia-noche:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
-}
-
+/* Button press animation */
+.btn-reset:active,
+.btn-modificar:active,
+.btn-play:active,
+.btn-dia-noche:active,
 .btn-play-sonido:active {
-    animation-name: boton;
-    animation-duration: 0.5s;
+    animation: boton 0.5s;
 }
 
 @keyframes boton {

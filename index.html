@@ -2,83 +2,105 @@
 <html lang="es">
 
 <head>
-    <title>Timer</title>
-    <link rel="shortcut icon" href="IMG/reloj.png">
-    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/estructura.css">
-    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/animaciones.css">
-    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/estilo.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer & Chill - Focus Timer with Ambient Sounds</title>
+    <meta name="description" content="A beautiful timer app with ambient sounds for studying, reading, and relaxation">
+    <link rel="shortcut icon" href="IMG/reloj.png">
+    <link rel="stylesheet" type="text/css" href="CSS/estructura.css">
+    <link rel="stylesheet" type="text/css" href="CSS/animaciones.css">
+    <link rel="stylesheet" type="text/css" href="CSS/estilo.css">
 </head>
 
 <body>
     <div class="grid-container">
         <header class="grid__header-container">
-            <div class="palabra-cambiante-container"><span class="typed"></span></div>
+            <div class="palabra-cambiante-container" aria-live="polite">
+                <span class="typed" aria-label="Current activity"></span>
+            </div>
             <div class="btn-dia-noche-container">
-                <button class="btn-dia-noche"><img class="img-btn-dia-noche" src="/img/sol.png"></button>
+                <button class="btn-dia-noche" aria-label="Toggle day/night mode">
+                    <img class="img-btn-dia-noche" src="IMG/sol.png" alt="Day mode">
+                </button>
             </div>
         </header>
         <main class="grid__main-container">
-            <img class="img-hojas" src="img/hojas.png">
+            <img class="img-hojas" src="IMG/hojas.png" alt="Decorative leaves">
             <div class="grid__reloj-container">
-                <div class="reloj-principal">
-                    <div class="timer-principal__mas-tiempo">
-                        <button>+</button>
-                        <button>+</button>
-                        <button>+</button>
+                <div class="reloj-principal" role="timer" aria-live="polite" aria-atomic="true">
+                    <div class="timer-principal__mas-tiempo" aria-label="Increase time">
+                        <button aria-label="Increase hours">+</button>
+                        <button aria-label="Increase minutes">+</button>
+                        <button aria-label="Increase seconds">+</button>
                     </div>
                     <div class="timer-principal__tiempo">
-                        <span>00</span>
-                        <span>:</span>
-                        <span>00</span>
-                        <span>00</span>
+                        <span aria-label="Hours">00</span>
+                        <span aria-hidden="true">:</span>
+                        <span aria-label="Minutes">00</span>
+                        <span aria-label="Seconds">00</span>
                     </div>
-                    <div class="timer-principal__menos-tiempo">
-                        <button>-</button>
-                        <button>-</button>
-                        <button>-</button>
+                    <div class="timer-principal__menos-tiempo" aria-label="Decrease time">
+                        <button aria-label="Decrease hours">-</button>
+                        <button aria-label="Decrease minutes">-</button>
+                        <button aria-label="Decrease seconds">-</button>
                     </div>
                 </div>
-                <button class="btn-reset">0:00<img></button>
-                <button class="btn-modificar"><img class="img-btn-modificar" src="img/boligrafo.png"></button>
-                <button class="btn-play"><img class="img-btn-play" src="img/play.png"></button>
+                <button class="btn-reset" aria-label="Reset timer">0:00</button>
+                <button class="btn-modificar" aria-label="Edit timer">
+                    <img class="img-btn-modificar" src="IMG/boligrafo.png" alt="Edit">
+                </button>
+                <button class="btn-play" aria-label="Start/pause timer">
+                    <img class="img-btn-play" src="IMG/play.png" alt="Play">
+                </button>
             </div>
-            <div class="container-sonidos">
+            <div class="container-sonidos" role="region" aria-label="Ambient sounds">
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Rain</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoLluvia.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play rain sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoLluvia.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Rain volume">
                 </div>
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Forest</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoBosqueNocturno.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play forest sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoBosqueNocturno.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Forest volume">
                 </div>
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Cafe</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoCafeteria.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play cafe sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoCafeteria.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Cafe volume">
                 </div>
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Garden</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoJardin.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play garden sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoJardin.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Garden volume">
                 </div>
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Farm</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoGranja.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play farm sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoGranja.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Farm volume">
                 </div>
                 <div class="contenedor-sonido">
                     <span class="titulo-sonido">Restaurant</span>
-                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
-                    <audio class="sonido" src="AUDIO/sonidoRestaurante.mp3" loop autobuffer></audio>
-                    <input class="volumen-sonido" type="range" min="0" max="100">
+                    <button class="btn-play-sonido" aria-label="Play restaurant sound">
+                        <img class="img-play-sonido" src="IMG/play.png" alt="Play">
+                    </button>
+                    <audio class="sonido" src="AUDIO/sonidoRestaurante.mp3" loop preload="metadata"></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100" value="50" aria-label="Restaurant volume">
                 </div>
             </div>
         </main>
