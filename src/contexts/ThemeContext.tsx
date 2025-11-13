@@ -24,9 +24,9 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  // Load theme from localStorage or use day mode as default
+  // Load theme from localStorage or use night mode as default
   const savedTheme = storage.getTheme()
-  const [theme, setTheme] = useState<Theme>(savedTheme || 'day')
+  const [theme, setTheme] = useState<Theme>(savedTheme || 'night')
 
 
   const colors = THEME_COLORS[theme]

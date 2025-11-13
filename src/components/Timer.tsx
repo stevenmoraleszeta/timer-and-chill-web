@@ -94,31 +94,29 @@ export const Timer: React.FC = () => {
       )}
 
       {/* Timer presets */}
-      {!isEditing && (
-        <div className={styles.presets}>
-          <div className={styles.presetsButtons}>
-            {TIMER_PRESETS.map((preset) => (
-              <button
-                key={preset.label}
-                className={styles.presetButton}
-                onClick={() => setPreset(preset.minutes)}
-                aria-label={`Set timer to ${preset.label}`}
-              >
-                {preset.label}
-              </button>
-            ))}
-            {!isPomodoroMode && (
-              <button
-                className={`${styles.presetButton} ${styles.pomodoroButton}`}
-                onClick={startPomodoro}
-                aria-label="Start Pomodoro timer"
-              >
-                🍅 Pomodoro
-              </button>
-            )}
-          </div>
+      <div className={styles.presets}>
+        <div className={styles.presetsButtons}>
+          {TIMER_PRESETS.map((preset) => (
+            <button
+              key={preset.label}
+              className={styles.presetButton}
+              onClick={() => setPreset(preset.minutes)}
+              aria-label={`Set timer to ${preset.label}`}
+            >
+              {preset.label}
+            </button>
+          ))}
+          {!isPomodoroMode && (
+            <button
+              className={`${styles.presetButton} ${styles.pomodoroButton}`}
+              onClick={startPomodoro}
+              aria-label="Start Pomodoro timer"
+            >
+              🍅 Pomodoro
+            </button>
+          )}
         </div>
-      )}
+      </div>
 
       <div className={styles.timer}>
         {/* Progress ring - on the border */}
