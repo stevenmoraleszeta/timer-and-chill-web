@@ -1,0 +1,353 @@
+body {
+    margin: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+    grid-template-columns: repeat(10, minmax(75px, 1fr));
+    width: 100%;
+}
+
+.grid__header-container {
+    grid-row: 1 / 2;
+    grid-column: 1 / 11;
+    display: grid;
+    grid-template-rows: 50px;
+    width: 100%;
+    height: 50px;
+}
+
+.palabra-cambiante-container {
+    grid-row: 1/2;
+    align-self: center;
+    margin-left: 20px;
+    letter-spacing: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+    color: var(--color-titulo-cambiante);
+}
+
+.btn-dia-noche-container {
+    grid-row: 1/2;
+    justify-self: end;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(3, 14px);
+    width: 60px;
+    height: 35px;
+    margin-right: 15px;
+}
+
+.btn-dia-noche {
+    align-self: center;
+    grid-column: 1/2;
+    width: 33px;
+    height: 33px;
+    padding: 0;
+}
+
+.img-btn-dia-noche {
+    margin-top: 2px;
+    width: 25px;
+    height: 25px;
+}
+
+.grid__main-container {
+    grid-row: 2 / 3;
+    grid-column: 1 / 11;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(75px, 1fr));
+    width: 100%;
+    height: 600px;
+}
+
+.img-hojas {
+    grid-column: 1 / 2;
+    margin-left: -150px;
+    justify-self: left;
+    z-index: 100;
+}
+
+.grid__reloj-container {
+    grid-column: 2 / 9;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(75px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(75px, 1fr));
+    width: 100%;
+    margin-left: 50px;
+}
+
+.reloj-principal {
+    grid-row: 1 / 8;
+    grid-column: 1 / 9;
+    display: grid;
+    grid-template-rows: repeat(3, minmax(133px, 1fr));
+    width: 400px;
+    height: 400px;
+    margin-top: 30px;
+    justify-self: center;
+    z-index: 50;
+}
+
+.timer-principal__tiempo {
+    grid-row: 2 / 3;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    height: 130px;
+}
+
+.timer-principal__mas-tiempo {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    align-self: flex-end;
+    display: none;
+    grid-template-rows: 130px;
+    grid-template-columns: repeat(3, minmax(130px, 1fr));
+    z-index: 200;
+}
+
+.timer-principal__mas-tiempo button {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+}
+
+.timer-principal__mas-tiempo button:nth-child(1) {
+    margin-left: 45px;
+    align-self: end;
+    justify-self: center;
+}
+
+.timer-principal__mas-tiempo button:nth-child(2) {
+    margin-left: 45px;
+    align-self: end;
+    justify-self: center;
+}
+
+.timer-principal__mas-tiempo button:nth-child(3) {
+    margin-top: 30px;
+    margin-right: 7px;
+    align-self: end;
+    justify-self: center;
+}
+
+.timer-principal__tiempo span {
+    grid-row: 2 / 3;
+    font-size: 110px;
+}
+
+.timer-principal__tiempo span:nth-child(2) {
+    align-self: center;
+    margin: 0 -7px;
+    font-size: 90px;
+}
+
+.timer-principal__tiempo span:last-child {
+    align-self: center;
+    margin-top: 15px;
+    font-size: 80px;
+}
+
+.timer-principal__menos-tiempo {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+    align-self: flex-end;
+    display: none;
+    grid-template-rows: 130px;
+    grid-template-columns: repeat(3, minmax(130px, 1fr));
+    margin-bottom: 25px;
+    z-index: 200;
+}
+
+.timer-principal__menos-tiempo button {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+}
+
+.timer-principal__menos-tiempo button:nth-child(1) {
+    margin-left: 45px;
+    align-self: start;
+    justify-self: center;
+}
+
+.timer-principal__menos-tiempo button:nth-child(2) {
+    margin-left: 45px;
+    align-self: start;
+    justify-self: center;
+}
+
+.timer-principal__menos-tiempo button:nth-child(3) {
+    margin-bottom: 15px;
+    margin-right: 7px;
+    align-self: start;
+    justify-self: center;
+}
+
+.btn-reset {
+    grid-row: 7 / 9;
+    grid-column: 3 / 5;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    margin-top: 10px;
+    justify-self: left;
+    align-self: start;
+}
+
+.btn-modificar {
+    grid-row: 7 / 9;
+    grid-column: 3 / 5;
+    width: 75px;
+    height: 75px;
+    margin: 0;
+    margin-top: 10px;
+    margin-left: 50px;
+    justify-self: center;
+    align-self: center;
+}
+
+.img-btn-modificar {
+    width: 40px;
+    height: 40px;
+}
+
+.btn-play {
+    grid-row: 7 / 9;
+    grid-column: 5 / 7;
+    width: 75px;
+    height: 75px;
+    margin: 0;
+    margin-top: 10px;
+    margin-right: 50px;
+    justify-self: center;
+    align-self: center;
+}
+
+.img-btn-play {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+}
+
+.container-sonidos {
+    grid-column: 9 / 11;
+    display: grid;
+    grid-template-rows: repeat(6, minmax(85px, 1fr));
+}
+
+.contenedor-sonido {
+    display: grid;
+    align-self: center;
+    grid-template-rows: repeat(2, 1fr);
+    height: 50px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.titulo-sonido {
+    grid-row: 1 / 2;
+    display: inline-block;
+}
+
+.btn-play-sonido {
+    grid-row: 1/2;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.img-play-sonido {
+    width: 18px;
+    height: 18px;
+}
+
+.volumen-sonido {
+    grid-row: 2/3;
+    display: block;
+    width: 80%;
+}
+
+@media screen and (max-width:815px) {
+    .grid-container {
+        grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+        grid-template-columns: repeat(7, minmax(40px, 1fr));
+    }
+    .grid__main-container {
+        grid-row: 2 / 3;
+        grid-column: 1 / 8;
+        display: grid;
+        grid-template-columns: repeat(10, minmax(20px, 1fr));
+        justify-self: center;
+    }
+    .grid__reloj-container {
+        grid-column: 1 / 10;
+        grid-template-columns: repeat(8, minmax(20px, 1fr));
+        height: 600px;
+        transform: scale(0.95);
+    }
+    .container-sonidos {
+        grid-row: 3 / 4;
+        grid-column: 2 / 10;
+        margin-left: 10px;
+    }
+    .img-hojas {
+        display: none;
+    }
+    .btn-reset {
+        grid-column: 2 / 3;
+    }
+}
+
+@media screen and (max-width:815px) {
+    .btn-modificar {
+        grid-column: 3 / 4;
+    }
+    .btn-play {
+        grid-column: 6 / 7;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .grid-container {
+        grid-template-rows: repeat(auto-fill, minmax(25px, 1fr));
+        grid-template-columns: repeat(7, minmax(40px, 1fr));
+    }
+    .palabra-cambiante-container {
+        font-size: 17px;
+    }
+    .grid__main-container {
+        grid-row: 2 / 3;
+        grid-column: 1 / 10;
+        display: grid;
+        grid-template-rows: repeat(1, minmax(475px, 1fr));
+        grid-template-columns: repeat(10, minmax(20px, 1fr));
+        width: 100%;
+    }
+    .img-hojas {
+        display: none;
+    }
+    .grid__reloj-container {
+        grid-column: 1 / 10;
+        grid-row: 1 / 2;
+        transform: scale(0.7);
+        align-self: center;
+        justify-self: center;
+    }
+    .reloj-principal {
+        align-self: start;
+    }
+    .container-sonidos {
+        grid-row: 3 / 4;
+        grid-column: 1 / 11;
+        margin-top: -20px;
+        margin-left: 10px;
+        transform: scale(0.9);
+    }
+    .btn-reset {
+        grid-column: 1 / 2;
+    }
+}

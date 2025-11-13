@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Timer</title>
+    <link rel="shortcut icon" href="IMG/reloj.png">
+    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/estructura.css">
+    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/animaciones.css">
+    <link class="estilo" rel="stylesheet" type="text/css" href="CSS/estilo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="grid-container">
+        <header class="grid__header-container">
+            <div class="palabra-cambiante-container"><span class="typed"></span></div>
+            <div class="btn-dia-noche-container">
+                <button class="btn-dia-noche"><img class="img-btn-dia-noche" src="/img/sol.png"></button>
+            </div>
+        </header>
+        <main class="grid__main-container">
+            <img class="img-hojas" src="img/hojas.png">
+            <div class="grid__reloj-container">
+                <div class="reloj-principal">
+                    <div class="timer-principal__mas-tiempo">
+                        <button>+</button>
+                        <button>+</button>
+                        <button>+</button>
+                    </div>
+                    <div class="timer-principal__tiempo">
+                        <span>00</span>
+                        <span>:</span>
+                        <span>00</span>
+                        <span>00</span>
+                    </div>
+                    <div class="timer-principal__menos-tiempo">
+                        <button>-</button>
+                        <button>-</button>
+                        <button>-</button>
+                    </div>
+                </div>
+                <button class="btn-reset">0:00<img></button>
+                <button class="btn-modificar"><img class="img-btn-modificar" src="img/boligrafo.png"></button>
+                <button class="btn-play"><img class="img-btn-play" src="img/play.png"></button>
+            </div>
+            <div class="container-sonidos">
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Rain</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoLluvia.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Forest</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoBosqueNocturno.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Cafe</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoCafeteria.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Garden</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoJardin.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Farm</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoGranja.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+                <div class="contenedor-sonido">
+                    <span class="titulo-sonido">Restaurant</span>
+                    <button class="btn-play-sonido"><img class="img-play-sonido" src="IMG/play.png"></button>
+                    <audio class="sonido" src="AUDIO/sonidoRestaurante.mp3" loop autobuffer></audio>
+                    <input class="volumen-sonido" type="range" min="0" max="100">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="JS/LIB/typed.js"></script>
+    <script src="JS/textoCambiante.js"></script>
+    <script src="JS/botonesReloj.js"></script>
+    <script src="JS/modoNoche.js"></script>
+    <script src="JS/reproductorSonidos.js"></script>
+
+</body>
+
+</html>
