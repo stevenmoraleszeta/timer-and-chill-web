@@ -29,6 +29,17 @@ export const ACTIVITIES = [
   'Sleeping',
   'Resting',
   'Programming',
+  'Working',
+  'Focusing',
+  'Meditating',
+  'Coding',
+  'Learning',
+  'Creating',
+  'Designing',
+  'Planning',
+  'Thinking',
+  'Reflecting',
+  'Relaxing',
 ]
 
 export const SOUNDS = [

@@ -3,7 +3,10 @@
   flex-direction: column;
   gap: var(--spacing-lg);
   width: 100%;
-  padding: clamp(0.5rem, 1.5vh, 1rem) 0;
+  padding: 0;
+  margin: 0;
+  order: 2;
+  overflow: visible;
 }
 
 .presetsSection {
@@ -20,7 +23,7 @@
 .presetsLabel {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   opacity: 0.9;
 }
 
@@ -32,22 +35,24 @@
 
 .presetButton {
   padding: var(--spacing-xs) var(--spacing-md);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: var(--preset-button-bg, rgba(255, 255, 255, 0.25));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--preset-button-border, rgba(255, 255, 255, 0.4));
   border-radius: var(--radius-full);
-  color: var(--color-btns-reloj);
-  font-size: 0.85rem;
-  font-weight: 600;
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-base);
-  min-width: 80px;
+  min-width: 85px;
+  letter-spacing: 0.3px;
 }
 
 .presetButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--preset-button-hover-bg, rgba(255, 255, 255, 0.35));
+  border-color: var(--preset-button-border, rgba(255, 255, 255, 0.5));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .presetButton:active {
@@ -60,20 +65,136 @@
   gap: clamp(0.5rem, 1.5vh, 1rem);
 }
 
-@media screen and (max-width: 768px) {
+/* Tablet (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
   .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-md);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+  }
+
+  .presetsSection {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+  }
+
+  .presetButton {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 70px;
+  }
+
+  .soundsSection {
+    gap: var(--spacing-sm);
   }
 }
 
-@media screen and (max-width: 500px) {
+/* Mobile landscape and small tablets (600px - 767px) */
+@media screen and (max-width: 767px) and (min-width: 600px) {
   .container {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+  }
+
+  .presetsSection {
     padding: var(--spacing-sm);
+  }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+    justify-content: center;
+  }
+
+  .presetButton {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 65px;
+  }
+}
+
+/* Mobile (max-width: 599px) */
+@media screen and (max-width: 599px) {
+  .container {
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+    width: 100%;
+  }
+
+  .presetsSection {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+
+  .presetsLabel {
+    font-size: clamp(0.85rem, 3.5vw, 0.9rem);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .presetButton {
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: clamp(60px, 15vw, 80px);
+    min-height: 36px; /* Touch target */
+  }
+
+  .soundsSection {
+    gap: var(--spacing-sm);
+  }
+}
+
+/* Small mobile (max-width: 375px) */
+@media screen and (max-width: 375px) {
+  .presetsSection {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .presetButton {
+    font-size: 0.7rem;
+    min-width: 55px;
+    padding: var(--spacing-xs);
+  }
+
+  .soundsSection {
+    gap: var(--spacing-xs);
+  }
+}
+
+/* Landscape orientation for mobile */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .container {
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) 0;
+  }
+
+  .presetsSection {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .presetsLabel {
+    font-size: 0.8rem;
+  }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+  }
+
+  .presetButton {
+    font-size: 0.7rem;
+    padding: var(--spacing-xs);
+    min-width: 50px;
+    min-height: 32px;
+  }
+
+  .soundsSection {
+    gap: var(--spacing-xs);
   }
 }
 

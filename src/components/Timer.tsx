@@ -1,10 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { useTimer } from '../hooks/useTimer'
 import { TIMER_PRESETS } from '../constants'
-import playIcon from '../assets/images/play.png'
-import stopIcon from '../assets/images/detener.png'
-import editIcon from '../assets/images/boligrafo.png'
-import saveIcon from '../assets/images/guardar.png'
+import { BsPlayFill, BsPauseFill, BsPencil, BsCheck } from 'react-icons/bs'
 import styles from './Timer.module.css'
 
 export const Timer: React.FC = () => {
@@ -97,9 +94,8 @@ export const Timer: React.FC = () => {
       )}
 
       {/* Timer presets */}
-      {!isEditing && !isRunning && (
+      {!isEditing && (
         <div className={styles.presets}>
-          <div className={styles.presetsLabel}>Quick Presets:</div>
           <div className={styles.presetsButtons}>
             {TIMER_PRESETS.map((preset) => (
               <button
@@ -125,26 +121,26 @@ export const Timer: React.FC = () => {
       )}
 
       <div className={styles.timer}>
-        {/* Progress ring */}
+        {/* Progress ring - on the border */}
         <div className={styles.progressRing}>
           <svg className={styles.progressSvg} viewBox="0 0 100 100">
             <circle
               className={styles.progressBackground}
               cx="50"
               cy="50"
-              r="45"
+              r="48"
               fill="none"
-              strokeWidth="8"
+              strokeWidth="4"
             />
             <circle
               className={styles.progressBar}
               cx="50"
               cy="50"
-              r="45"
+              r="48"
               fill="none"
-              strokeWidth="8"
-              strokeDasharray={`${2 * Math.PI * 45}`}
-              strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
+              strokeWidth="4"
+              strokeDasharray={`${2 * Math.PI * 48}`}
+              strokeDashoffset={`${2 * Math.PI * 48 * (1 - progress / 100)}`}
               transform="rotate(-90 50 50)"
             />
           </svg>
@@ -219,11 +215,11 @@ export const Timer: React.FC = () => {
           aria-label={isEditing ? 'Save timer' : 'Edit timer'}
           title="Edit (E)"
         >
-          <img
-            className={styles.icon}
-            src={isEditing ? saveIcon : editIcon}
-            alt={isEditing ? 'Save' : 'Edit'}
-          />
+          {isEditing ? (
+            <BsCheck className={styles.icon} />
+          ) : (
+            <BsPencil className={styles.icon} />
+          )}
         </button>
         <button
           className={styles.playButton}
@@ -231,11 +227,11 @@ export const Timer: React.FC = () => {
           aria-label={isRunning ? 'Pause timer' : 'Start timer'}
           title={isRunning ? 'Pause (Space)' : 'Start (Space)'}
         >
-          <img
-            className={styles.icon}
-            src={isRunning ? stopIcon : playIcon}
-            alt={isRunning ? 'Pause' : 'Play'}
-          />
+          {isRunning ? (
+            <BsPauseFill className={styles.icon} />
+          ) : (
+            <BsPlayFill className={styles.icon} />
+          )}
         </button>
       </div>
     </div>

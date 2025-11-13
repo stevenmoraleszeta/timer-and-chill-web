@@ -1,8 +1,7 @@
 import React, { useEffect, memo } from 'react'
 import { useAudio } from '../hooks/useAudio'
 import { useSoundContext } from '../contexts/SoundContext'
-import playIcon from '../assets/images/play.png'
-import stopIcon from '../assets/images/detener.png'
+import { BsPlayFill, BsPauseFill } from 'react-icons/bs'
 import styles from './SoundPlayer.module.css'
 
 interface SoundPlayerProps {
@@ -61,11 +60,11 @@ export const SoundPlayer: React.FC<SoundPlayerProps> = memo(({
           onClick={toggle}
           aria-label={isPlaying ? `Pause ${name} sound` : `Play ${name} sound`}
         >
-          <img
-            className={styles.icon}
-            src={isPlaying ? stopIcon : playIcon}
-            alt={isPlaying ? 'Pause' : 'Play'}
-          />
+          {isPlaying ? (
+            <BsPauseFill className={styles.icon} />
+          ) : (
+            <BsPlayFill className={styles.icon} />
+          )}
         </button>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTheme } from '../contexts/ThemeContext'
-import sunIcon from '../assets/images/sol.png'
-import moonIcon from '../assets/images/luna.png'
+import { BsSun, BsMoon } from 'react-icons/bs'
 import styles from './ThemeToggle.module.css'
 
 export const ThemeToggle: React.FC = () => {
@@ -14,11 +13,11 @@ export const ThemeToggle: React.FC = () => {
         onClick={toggleTheme}
         aria-label={`Toggle ${theme === 'day' ? 'night' : 'day'} mode`}
       >
-        <img
-          className={styles.icon}
-          src={theme === 'day' ? sunIcon : moonIcon}
-          alt={theme === 'day' ? 'Day mode' : 'Night mode'}
-        />
+        {theme === 'day' ? (
+          <BsSun className={styles.icon} />
+        ) : (
+          <BsMoon className={styles.icon} />
+        )}
       </button>
     </div>
   )

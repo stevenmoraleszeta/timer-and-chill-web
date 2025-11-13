@@ -177,6 +177,8 @@ export const useTimer = () => {
         setInitialTime(time)
         storage.setInitialTime(time)
       }
+      // Exit edit mode when starting the timer
+      setIsEditing(false)
       setIsRunning(true)
     }
   }, [time, isRunning, initialTime])

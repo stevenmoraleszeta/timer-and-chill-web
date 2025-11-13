@@ -23,7 +23,7 @@
 
 .pomodoroLabel {
   font-weight: 600;
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   font-size: 0.9rem;
 }
 
@@ -32,7 +32,7 @@
   background: rgba(255, 107, 107, 0.3);
   border: 1px solid rgba(255, 107, 107, 0.5);
   border-radius: var(--radius-md);
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -49,43 +49,41 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   align-items: center;
+  margin-bottom: var(--spacing-md);
 }
 
-.presetsLabel {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--color-btns-reloj);
-  opacity: 0.8;
-}
 
 .presetsButtons {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
   justify-content: center;
   width: 100%;
+  max-width: 600px;
 }
 
 .presetButton {
-  padding: var(--spacing-xs) var(--spacing-md);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  background: var(--preset-button-bg, rgba(255, 255, 255, 0.25));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--preset-button-border, rgba(255, 255, 255, 0.4));
   border-radius: var(--radius-full);
-  color: var(--color-btns-reloj);
-  font-size: 0.85rem;
-  font-weight: 600;
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
+  font-size: 0.875rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-base);
-  min-width: 60px;
+  min-width: 65px;
+  letter-spacing: 0.3px;
 }
 
 .presetButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--preset-button-hover-bg, rgba(255, 255, 255, 0.35));
+  border-color: var(--preset-button-border, rgba(255, 255, 255, 0.5));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .presetButton:active {
@@ -118,14 +116,15 @@
   padding: var(--spacing-xl);
 }
 
-/* Progress ring */
+/* Progress ring - positioned on the border */
 .progressRing {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -20px;
+  left: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
   pointer-events: none;
+  z-index: 1;
 }
 
 .progressSvg {
@@ -135,14 +134,15 @@
 }
 
 .progressBackground {
-  stroke: rgba(0, 0, 0, 0.1);
+  stroke: var(--progress-background-color, rgba(116, 179, 193, 0.3));
   transition: stroke var(--transition-base);
 }
 
 .progressBar {
-  stroke: var(--color-segundero);
+  stroke: var(--progress-bar-color, var(--color-segundero));
   stroke-linecap: round;
   transition: stroke-dashoffset 0.5s ease, stroke var(--transition-base);
+  filter: drop-shadow(0 0 2px rgba(116, 179, 193, 0.5));
 }
 
 .adjustButtonsTop {
@@ -166,7 +166,7 @@
   font-weight: bold;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -192,6 +192,8 @@
   gap: var(--spacing-xs);
   margin: var(--spacing-xl) 0;
   font-family: 'Courier New', monospace;
+  position: relative;
+  z-index: 10;
 }
 
 .timeDisplay span {
@@ -205,7 +207,7 @@
 
 .timeDisplay span:nth-child(2) {
   font-size: clamp(2.5rem, 7vw, 5rem);
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   margin: 0 var(--spacing-xs);
 }
 
@@ -235,7 +237,7 @@
   font-weight: bold;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  color: var(--color-btns-reloj);
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -334,10 +336,11 @@
 .icon {
   width: 35px;
   height: 35px;
-  filter: invert();
+  color: #ffffff;
   position: relative;
   z-index: 1;
   transition: transform var(--transition-base);
+  display: block;
 }
 
 .editButton:hover .icon,
@@ -345,16 +348,18 @@
   transform: scale(1.1);
 }
 
-@media screen and (max-width: 768px) {
+/* Tablet (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
   .container {
     gap: var(--spacing-lg);
     padding: var(--spacing-md);
+    max-width: 100%;
   }
 
   .timer {
-    width: 360px;
-    height: 360px;
-    border-width: 15px;
+    width: clamp(320px, 50vw, 400px);
+    height: clamp(320px, 50vw, 400px);
+    border-width: clamp(12px, 2vw, 18px);
   }
 
   .adjustButtonsTop,
@@ -394,39 +399,51 @@
     width: 30px;
     height: 30px;
   }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+  }
+
+  .presetButton {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 55px;
+  }
 }
 
-@media screen and (max-width: 500px) {
+/* Mobile landscape and small tablets (600px - 767px) */
+@media screen and (max-width: 767px) and (min-width: 600px) {
   .container {
     gap: var(--spacing-md);
     padding: var(--spacing-sm);
+    max-width: 100%;
   }
 
   .timer {
-    width: 300px;
-    height: 300px;
-    border-width: 12px;
+    width: clamp(280px, 60vw, 360px);
+    height: clamp(280px, 60vw, 360px);
+    border-width: clamp(10px, 2vw, 15px);
   }
 
   .adjustButtonsTop {
-    top: 30px;
-    max-width: 240px;
+    top: 35px;
+    max-width: 260px;
   }
 
   .adjustButtonsBottom {
-    bottom: 30px;
-    max-width: 240px;
+    bottom: 35px;
+    max-width: 260px;
   }
 
   .adjustButtonsTop button,
   .adjustButtonsBottom button {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     font-size: 18px;
   }
 
   .adjustButtonsBottom button {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   .controls {
@@ -434,19 +451,167 @@
   }
 
   .resetButton {
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
     font-size: 11px;
   }
 
   .editButton,
   .playButton {
-    width: 60px;
-    height: 60px;
+    width: 62px;
+    height: 62px;
   }
 
   .icon {
     width: 28px;
     height: 28px;
+  }
+}
+
+/* Mobile (max-width: 599px) */
+@media screen and (max-width: 599px) {
+  .container {
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .timer {
+    width: min(90vw, 320px);
+    height: min(90vw, 320px);
+    border-width: clamp(8px, 2vw, 12px);
+    padding: var(--spacing-md);
+  }
+
+  .adjustButtonsTop {
+    top: clamp(20px, 5vw, 30px);
+    max-width: min(85vw, 240px);
+    gap: var(--spacing-sm);
+  }
+
+  .adjustButtonsBottom {
+    bottom: clamp(20px, 5vw, 30px);
+    max-width: min(85vw, 240px);
+    gap: var(--spacing-sm);
+  }
+
+  .adjustButtonsTop button,
+  .adjustButtonsBottom button {
+    width: clamp(28px, 7vw, 32px);
+    height: clamp(28px, 7vw, 32px);
+    font-size: clamp(16px, 4vw, 18px);
+    min-width: 44px; /* Touch target size */
+    min-height: 44px;
+  }
+
+  .adjustButtonsBottom button {
+    font-size: clamp(20px, 5vw, 24px);
+  }
+
+  .controls {
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .resetButton {
+    width: clamp(48px, 12vw, 50px);
+    height: clamp(48px, 12vw, 50px);
+    font-size: clamp(10px, 2.5vw, 11px);
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .editButton,
+  .playButton {
+    width: clamp(56px, 14vw, 60px);
+    height: clamp(56px, 14vw, 60px);
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .icon {
+    width: clamp(24px, 6vw, 28px);
+    height: clamp(24px, 6vw, 28px);
+  }
+
+  .presets {
+    width: 100%;
+  }
+
+  .presetsButtons {
+    gap: var(--spacing-xs);
+    justify-content: center;
+  }
+
+  .presetButton {
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-width: 50px;
+    min-height: 36px; /* Touch target */
+  }
+
+  .pomodoroIndicator {
+    padding: var(--spacing-xs) var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .pomodoroLabel {
+    font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+  }
+
+  .stopPomodoroButton {
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 36px;
+  }
+}
+
+/* Small mobile (max-width: 375px) */
+@media screen and (max-width: 375px) {
+  .timer {
+    width: min(85vw, 280px);
+    height: min(85vw, 280px);
+    border-width: 8px;
+  }
+
+  .timeDisplay span {
+    font-size: clamp(2rem, 12vw, 3rem) !important;
+  }
+
+  .timeDisplay span:nth-child(2) {
+    font-size: clamp(1.5rem, 10vw, 2.5rem) !important;
+  }
+
+  .timeDisplay span:last-child {
+    font-size: clamp(1.2rem, 8vw, 2rem) !important;
+  }
+
+  .presetButton {
+    font-size: 0.7rem;
+    min-width: 45px;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .container {
+    gap: var(--spacing-sm);
+  }
+
+  .timer {
+    width: clamp(200px, 30vh, 280px);
+    height: clamp(200px, 30vh, 280px);
+    border-width: 10px;
+  }
+
+  .presets {
+    display: none;
+  }
+
+  .pomodoroIndicator {
+    padding: var(--spacing-xs) var(--spacing-sm);
   }
 }

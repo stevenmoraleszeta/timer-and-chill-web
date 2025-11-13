@@ -1,12 +1,19 @@
 .container {
   display: flex;
   align-items: center;
-  letter-spacing: 4px;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
-  font-weight: 700;
-  color: var(--color-titulo-cambiante);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  letter-spacing: 3px;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--text-presets, var(--color-btns-reloj, #516091));
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
+  opacity: 0.85;
+  transition: opacity var(--transition-base);
+}
+
+.container:hover {
+  opacity: 1;
 }
 
 .typed {
@@ -14,17 +21,43 @@
   min-height: 1.2em;
 }
 
-@media screen and (max-width: 768px) {
+/* Tablet (768px - 1023px) */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
   .container {
-    letter-spacing: 2px;
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    letter-spacing: 3px;
+    font-size: clamp(1.1rem, 2.8vw, 1.6rem);
   }
 }
 
-@media screen and (max-width: 500px) {
+/* Mobile landscape and small tablets (600px - 767px) */
+@media screen and (max-width: 767px) and (min-width: 600px) {
+  .container {
+    letter-spacing: 2px;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+  }
+}
+
+/* Mobile (max-width: 599px) */
+@media screen and (max-width: 599px) {
+  .container {
+    letter-spacing: clamp(1px, 0.5vw, 2px);
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+  }
+}
+
+/* Small mobile (max-width: 375px) */
+@media screen and (max-width: 375px) {
   .container {
     letter-spacing: 1px;
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+  }
+}
+
+/* Landscape orientation for mobile */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  .container {
+    letter-spacing: 1px;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
   }
 }
 
