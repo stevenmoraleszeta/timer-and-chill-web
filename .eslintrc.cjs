@@ -15,6 +15,14 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'prefer-const': 'warn',
+    'no-var': 'error',
+    'object-shorthand': 'warn',
+    'prefer-arrow-callback': 'warn',
   },
 }
 

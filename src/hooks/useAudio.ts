@@ -27,8 +27,8 @@ export const useAudio = (soundId: string, src: string, defaultVolume: number = 5
       setIsPlaying(false)
     }
 
-    const handleError = () => {
-      console.error(`Audio error for ${src}`)
+    const handleError = (error: Event) => {
+      console.error(`Audio error for ${src}:`, error)
       setIsPlaying(false)
       storage.setSoundPlaying(soundId, false)
     }

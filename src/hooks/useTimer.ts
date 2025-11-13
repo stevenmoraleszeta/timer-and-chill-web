@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Time } from '../types'
 import {
   MAX_HOURS,
@@ -38,6 +38,7 @@ export const useTimer = () => {
   const [pomodoroSessionCount, setPomodoroSessionCount] = useState(pomodoroState.sessionCount)
   const [isBreak, setIsBreak] = useState(pomodoroState.isBreak)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const isInitialMount = useRef(true)
 
   // Request notification permission on mount
@@ -84,7 +85,8 @@ export const useTimer = () => {
           } else {
             // Timer finished
             setIsRunning(false)
-            const completedDuration = timeToSeconds(initialTime)
+            const currentInitialTime = initialTime
+            const completedDuration = timeToSeconds(currentInitialTime)
             storage.addTimerCompletion(completedDuration)
 
             if (isPomodoroMode) {
@@ -113,8 +115,11 @@ export const useTimer = () => {
                   'Break Time!',
                   `Take a ${breakMinutes}-minute break. Session ${newSessionCount} completed!`
                 )
-                // Auto-start break
-                setTimeout(() => setIsRunning(true), 1000)
+                // Auto-start break after a short delay
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current)
+                }
+                timeoutRef.current = setTimeout(() => setIsRunning(true), 1000)
               } else {
                 // Break completed, start next work session
                 setIsBreak(false)
@@ -128,11 +133,14 @@ export const useTimer = () => {
                   isBreak: false,
                 })
                 showNotification('Work Time!', 'Time to focus!')
-                // Auto-start work session
-                setTimeout(() => setIsRunning(true), 1000)
+                // Auto-start work session after a short delay
+                if (timeoutRef.current) {
+                  clearTimeout(timeoutRef.current)
+                }
+                timeoutRef.current = setTimeout(() => setIsRunning(true), 1000)
               }
             } else {
-            showNotification('Timer Complete', '¡El tiempo ha terminado!')
+              showNotification('Timer Complete', '¡El tiempo ha terminado!')
               setTime(INITIAL_TIME)
               setInitialTime(INITIAL_TIME)
               storage.setInitialTime(INITIAL_TIME)
@@ -151,6 +159,11 @@ export const useTimer = () => {
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
       }
     }
   }, [isRunning, isPomodoroMode, isBreak, pomodoroSessionCount, initialTime])
@@ -261,7 +274,7 @@ export const useTimer = () => {
   }, [])
 
   // Calculate progress percentage
-  const progress = useCallback(() => {
+  const progress = useMemo(() => {
     if (initialTime.hours === 0 && initialTime.minutes === 0 && initialTime.seconds === 0) {
       return 0
     }
@@ -271,11 +284,14 @@ export const useTimer = () => {
     return Math.min(100, Math.max(0, (elapsed / initialSeconds) * 100))
   }, [time, initialTime])
 
-  const formattedTime = {
-    hours: formatTime(time.hours),
-    minutes: formatTime(time.minutes),
-    seconds: formatTime(time.seconds),
-  }
+  const formattedTime = useMemo(
+    () => ({
+      hours: formatTime(time.hours),
+      minutes: formatTime(time.minutes),
+      seconds: formatTime(time.seconds),
+    }),
+    [time.hours, time.minutes, time.seconds]
+  )
 
   // Save Pomodoro state
   useEffect(() => {
@@ -298,7 +314,7 @@ export const useTimer = () => {
     isPomodoroMode,
     isBreak,
     pomodoroSessionCount,
-    progress: progress(),
+    progress,
     start,
     pause,
     reset,

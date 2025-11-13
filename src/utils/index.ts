@@ -58,16 +58,28 @@ export const requestNotificationPermission = async (): Promise<boolean> => {
  * Show notification
  */
 export const showNotification = (title: string, body: string, icon?: string): void => {
-  if ('Notification' in window && Notification.permission === 'granted') {
-    try {
-      new Notification(title, {
-        body,
-        icon: icon || `${window.location.origin}/images/reloj.png`,
-        tag: 'timer-complete',
-      })
-    } catch (error) {
-      console.warn('Failed to show notification:', error)
-    }
+  if (!('Notification' in window)) {
+    return
+  }
+
+  if (Notification.permission !== 'granted') {
+    return
+  }
+
+  try {
+    const notification = new Notification(title, {
+      body,
+      icon: icon || `${window.location.origin}/images/reloj.png`,
+      tag: 'timer-complete',
+      requireInteraction: false,
+    })
+
+    // Auto-close notification after 5 seconds
+    setTimeout(() => {
+      notification.close()
+    }, 5000)
+  } catch (error) {
+    console.warn('Failed to show notification:', error)
   }
 }
 
@@ -92,7 +104,17 @@ export const storage = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.TIMER_TIME)
       if (stored) {
-        return JSON.parse(stored)
+        const parsed = JSON.parse(stored) as { hours: number; minutes: number; seconds: number }
+        // Validate the structure
+        if (
+          typeof parsed === 'object' &&
+          parsed !== null &&
+          typeof parsed.hours === 'number' &&
+          typeof parsed.minutes === 'number' &&
+          typeof parsed.seconds === 'number'
+        ) {
+          return parsed
+        }
       }
     } catch (error) {
       console.warn('Failed to load timer time from localStorage:', error)
@@ -220,7 +242,22 @@ export const storage = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.TIMER_STATISTICS)
       if (stored) {
-        return JSON.parse(stored)
+        const parsed = JSON.parse(stored) as {
+          totalCompleted: number
+          totalTime: number
+          lastCompleted: string | null
+          sessions: Array<{ date: string; duration: number }>
+        }
+        // Validate the structure
+        if (
+          typeof parsed === 'object' &&
+          parsed !== null &&
+          typeof parsed.totalCompleted === 'number' &&
+          typeof parsed.totalTime === 'number' &&
+          Array.isArray(parsed.sessions)
+        ) {
+          return parsed
+        }
       }
     } catch (error) {
       console.warn('Failed to load timer statistics from localStorage:', error)
@@ -258,7 +295,17 @@ export const storage = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.INITIAL_TIME)
       if (stored) {
-        return JSON.parse(stored)
+        const parsed = JSON.parse(stored) as { hours: number; minutes: number; seconds: number }
+        // Validate the structure
+        if (
+          typeof parsed === 'object' &&
+          parsed !== null &&
+          typeof parsed.hours === 'number' &&
+          typeof parsed.minutes === 'number' &&
+          typeof parsed.seconds === 'number'
+        ) {
+          return parsed
+        }
       }
     } catch (error) {
       console.warn('Failed to load initial time from localStorage:', error)
@@ -283,7 +330,21 @@ export const storage = {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.POMODORO_STATE)
       if (stored) {
-        return JSON.parse(stored)
+        const parsed = JSON.parse(stored) as {
+          sessionCount: number
+          isPomodoroMode: boolean
+          isBreak: boolean
+        }
+        // Validate the structure
+        if (
+          typeof parsed === 'object' &&
+          parsed !== null &&
+          typeof parsed.sessionCount === 'number' &&
+          typeof parsed.isPomodoroMode === 'boolean' &&
+          typeof parsed.isBreak === 'boolean'
+        ) {
+          return parsed
+        }
       }
     } catch (error) {
       console.warn('Failed to load Pomodoro state from localStorage:', error)

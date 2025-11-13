@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useTimer } from '../hooks/useTimer'
 import { TIMER_PRESETS } from '../constants'
 import playIcon from '../assets/images/play.png'
@@ -26,8 +26,8 @@ export const Timer: React.FC = () => {
   } = useTimer()
 
   // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
       // Ignore if user is typing in an input
       if (
         e.target instanceof HTMLInputElement ||
@@ -64,12 +64,17 @@ export const Timer: React.FC = () => {
             }
           }
           break
+        default:
+          break
       }
-    }
+    },
+    [toggle, reset, toggleEdit, startPomodoro, stopPomodoro, isPomodoroMode]
+  )
 
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [toggle, reset, toggleEdit, startPomodoro, stopPomodoro, isPomodoroMode])
+  }, [handleKeyPress])
 
   return (
     <div className={styles.container}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { storage } from '../utils'
 import styles from './Statistics.module.css'
 
@@ -6,7 +6,7 @@ export const Statistics: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const stats = storage.getTimerStatistics()
 
-  const formatDuration = (seconds: number): string => {
+  const formatDuration = useCallback((seconds: number): string => {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60
@@ -18,22 +18,31 @@ export const Statistics: React.FC = () => {
     } else {
       return `${secs}s`
     }
-  }
+  }, [])
 
-  const formatDate = (dateString: string): string => {
+  const formatDate = useCallback((dateString: string): string => {
     const date = new Date(dateString)
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  }
+  }, [])
 
-  const averageDuration = stats.totalCompleted > 0
-    ? Math.round(stats.totalTime / stats.totalCompleted)
-    : 0
+  const averageDuration = useMemo(
+    () => (stats.totalCompleted > 0 ? Math.round(stats.totalTime / stats.totalCompleted) : 0),
+    [stats.totalCompleted, stats.totalTime]
+  )
+
+  const toggleOpen = useCallback(() => {
+    setIsOpen((prev) => !prev)
+  }, [])
+
+  const closePanel = useCallback(() => {
+    setIsOpen(false)
+  }, [])
 
   return (
     <div className={styles.container}>
       <button
         className={styles.toggleButton}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleOpen}
         aria-label={isOpen ? 'Hide statistics' : 'Show statistics'}
         aria-expanded={isOpen}
       >
@@ -46,7 +55,7 @@ export const Statistics: React.FC = () => {
             <h3>Timer Statistics</h3>
             <button
               className={styles.closeButton}
-              onClick={() => setIsOpen(false)}
+              onClick={closePanel}
               aria-label="Close statistics"
             >
               ×
@@ -83,12 +92,15 @@ export const Statistics: React.FC = () => {
             <div className={styles.sessionsList}>
               <h4>Recent Sessions</h4>
               <div className={styles.sessionsContainer}>
-                {stats.sessions.slice(-10).reverse().map((session, index) => (
-                  <div key={index} className={styles.sessionItem}>
-                    <div className={styles.sessionDate}>{formatDate(session.date)}</div>
-                    <div className={styles.sessionDuration}>{formatDuration(session.duration)}</div>
-                  </div>
-                ))}
+                {stats.sessions
+                  .slice(-10)
+                  .reverse()
+                  .map((session) => (
+                    <div key={`${session.date}-${session.duration}`} className={styles.sessionItem}>
+                      <div className={styles.sessionDate}>{formatDate(session.date)}</div>
+                      <div className={styles.sessionDuration}>{formatDuration(session.duration)}</div>
+                    </div>
+                  ))}
               </div>
             </div>
           )}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import { useAudio } from '../hooks/useAudio'
 import { useSoundContext } from '../contexts/SoundContext'
 import playIcon from '../assets/images/play.png'
@@ -12,7 +12,7 @@ interface SoundPlayerProps {
   defaultVolume?: number
 }
 
-export const SoundPlayer: React.FC<SoundPlayerProps> = ({
+export const SoundPlayer: React.FC<SoundPlayerProps> = memo(({
   id,
   name,
   audioSrc,
@@ -23,15 +23,17 @@ export const SoundPlayer: React.FC<SoundPlayerProps> = ({
 
   // Register this sound with the context
   useEffect(() => {
+    const setPlaying = (playing: boolean) => {
+      if (playing) {
+        play()
+      } else {
+        pause()
+      }
+    }
+
     registerSound(id, {
       setVolume,
-      setPlaying: (playing: boolean) => {
-        if (playing) {
-          play()
-        } else {
-          pause()
-        }
-      },
+      setPlaying,
       getVolume: () => volume,
       getPlaying: () => isPlaying,
     })
@@ -68,5 +70,7 @@ export const SoundPlayer: React.FC<SoundPlayerProps> = ({
       </div>
     </div>
   )
-}
+})
+
+SoundPlayer.displayName = 'SoundPlayer'
 

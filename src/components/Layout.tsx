@@ -16,6 +16,7 @@ export const Layout: React.FC = () => {
           src={leavesImage}
           alt="Decorative leaves"
           aria-hidden="true"
+          loading="lazy"
         />
         <div className={styles.contentWrapper}>
           <Timer />
