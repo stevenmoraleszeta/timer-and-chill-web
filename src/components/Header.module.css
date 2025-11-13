@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 70px;
+  padding: 0 var(--spacing-xl);
+  background: linear-gradient(135deg, var(--color-header) 0%, #5a9db3 100%);
+  border-bottom: 4px solid var(--color-borde-header);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    min-height: 60px;
+    padding: 0 var(--spacing-lg);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    min-height: 55px;
+    padding: 0 var(--spacing-md);
+  }
+}
+

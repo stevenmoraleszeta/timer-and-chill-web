@@ -2,14 +2,14 @@
 
 <div align="center">
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![License](https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge)
 
-A beautiful, accessible timer application with ambient sounds for focus, study, and relaxation.
+A modern, responsive, and professional React timer application with ambient sounds for focus, study, and relaxation.
 
-[Live Demo](#) • [Features](#-features) • [Installation](#-installation) • [Documentation](#-documentation)
+[Features](#-features) • [Installation](#-installation) • [Documentation](#-documentation) • [Development](#-development)
 
 </div>
 
@@ -17,35 +17,38 @@ A beautiful, accessible timer application with ambient sounds for focus, study, 
 
 ## ✨ Introduction
 
-**Timer & Chill** is a modern, fully-featured web application designed to help users maintain focus and productivity through customizable timers and ambient soundscapes. Built with vanilla JavaScript, this project demonstrates clean code architecture, accessibility best practices, and modern web development techniques.
+**Timer & Chill** is a modern, fully-featured React application designed to help users maintain focus and productivity through customizable timers and ambient soundscapes. Built with React 18, TypeScript, and Vite, this project demonstrates professional front-end development practices including:
 
-The application provides an intuitive interface for setting custom timers while offering six different ambient sound options to create the perfect working environment. With day/night mode switching, responsive design, and comprehensive accessibility features, Timer & Chill showcases professional front-end development skills.
+- ⚡ **Fast Development** - Vite for lightning-fast HMR
+- 🏗️ **Scalable Architecture** - Modular components, custom hooks, and context providers
+- 🎨 **Modern Styling** - CSS Modules with CSS Custom Properties
+- ♿ **Accessibility First** - ARIA labels, keyboard navigation, and semantic HTML
+- 📱 **Fully Responsive** - Mobile-first design with breakpoints
+- 🔒 **Type Safety** - Full TypeScript support
+- 🧪 **Production Ready** - Error boundaries, error handling, and optimizations
 
 ## 🚀 Technologies Used
 
 ### Core Technologies
-- **HTML5** - Semantic markup with ARIA attributes for accessibility
-- **CSS3** - Modern styling with CSS Grid, Custom Properties, and animations
-- **Vanilla JavaScript (ES6+)** - No frameworks, pure JavaScript implementation
+- **React 18** - Modern React with hooks
+- **TypeScript** - Type-safe development
+- **Vite** - Next-generation frontend tooling
+- **CSS Modules** - Scoped styling
 
-### Key Features & APIs
-- **Web Audio API** - For ambient sound playback and volume control
-- **Notifications API** - Browser notifications for timer completion
-- **CSS Custom Properties** - Dynamic theme switching (day/night mode)
-- **CSS Grid** - Responsive layout system
+### Key Libraries
 - **Typed.js** - Animated typing effect for activity display
+- **Web Audio API** - For ambient sound playback
+- **Notifications API** - Browser notifications for timer completion
 
-### Development Standards
-- **Accessibility (WCAG)** - ARIA labels, keyboard navigation, focus states
-- **Responsive Design** - Mobile-first approach with media queries
-- **Performance Optimization** - Efficient event handling and DOM manipulation
-- **Code Quality** - JSDoc comments, modular architecture, error handling
+### Development Tools
+- **ESLint** - Code linting and quality
+- **TypeScript Compiler** - Type checking
 
 ## ⚙️ Installation
 
 ### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, or Edge)
-- No build tools or dependencies required
+- **Node.js** 18+ (LTS recommended)
+- **npm** or **yarn** or **pnpm**
 
 ### Quick Start
 
@@ -55,104 +58,138 @@ The application provides an intuitive interface for setting custom timers while 
    cd timer-and-chill-prototype
    ```
 
-2. **Open the application**
-   - Simply open `index.html` in your web browser
-   - Or use a local development server:
-     ```bash
-     # Using Python 3
-     python -m http.server 8000
-     
-     # Using Node.js (if you have http-server installed)
-     npx http-server
-     
-     # Using PHP
-     php -S localhost:8000
-     ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-3. **Access the application**
-   - Navigate to `http://localhost:8000` in your browser
+3. **Start development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
 
-### Browser Compatibility
-- ✅ Chrome/Edge (recommended)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Any modern browser with ES6+ support
+4. **Open your browser**
+   - Navigate to `http://localhost:3000`
+   - The app will automatically reload on file changes
+
+### Build for Production
+
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
+
+The production build will be in the `dist` folder. You can preview it with:
+
+```bash
+npm run preview
+# or
+yarn preview
+# or
+pnpm preview
+```
 
 ## 🧩 Project Structure
 
 ```
 timer-and-chill-prototype/
 │
-├── index.html              # Main HTML file
-├── README.md               # Project documentation
-├── LICENSE                 # Proprietary license
-├── .gitignore             # Git ignore rules
+├── public/                  # Static assets (audio files)
+│   └── audio/              # Ambient sound files
 │
-├── AUDIO/                  # Ambient sound files
-│   ├── sonidoLluvia.mp3
-│   ├── sonidoBosqueNocturno.mp3
-│   ├── sonidoCafeteria.mp3
-│   ├── sonidoJardin.mp3
-│   ├── sonidoGranja.mp3
-│   └── sonidoRestaurante.mp3
+├── src/
+│   ├── assets/             # Assets (images, etc.)
+│   │   └── images/        # Image files
+│   │
+│   ├── components/         # React components
+│   │   ├── AnimatedText.tsx
+│   │   ├── ErrorBoundary.tsx
+│   │   ├── Header.tsx
+│   │   ├── Layout.tsx
+│   │   ├── SoundControls.tsx
+│   │   ├── SoundPlayer.tsx
+│   │   ├── ThemeToggle.tsx
+│   │   └── Timer.tsx
+│   │
+│   ├── contexts/           # React contexts
+│   │   └── ThemeContext.tsx
+│   │
+│   ├── hooks/              # Custom React hooks
+│   │   ├── useAudio.ts
+│   │   └── useTimer.ts
+│   │
+│   ├── types/              # TypeScript types
+│   │   └── index.ts
+│   │
+│   ├── utils/              # Utility functions
+│   │   └── index.ts
+│   │
+│   ├── constants/          # Constants and configuration
+│   │   └── index.ts
+│   │
+│   ├── App.tsx             # Root component
+│   ├── App.module.css      # Root component styles
+│   ├── main.tsx            # Application entry point
+│   ├── index.css           # Global styles
+│   └── vite-env.d.ts      # Vite type declarations
 │
-├── CSS/                    # Stylesheets
-│   ├── estructura.css     # Layout and grid structure
-│   ├── estilo.css          # Colors, themes, and styling
-│   └── animaciones.css     # Button animations and transitions
-│
-├── IMG/                    # Image assets
-│   ├── reloj.png           # Favicon and icons
-│   ├── sol.png             # Day mode icon
-│   ├── luna.png            # Night mode icon
-│   ├── play.png            # Play button icon
-│   ├── detener.png         # Stop button icon
-│   ├── boligrafo.png       # Edit button icon
-│   ├── guardar.png         # Save button icon
-│   └── hojas.png           # Decorative element
-│
-└── JS/                     # JavaScript modules
-    ├── botonesReloj.js     # Timer functionality and controls
-    ├── modoNoche.js        # Theme switching (day/night mode)
-    ├── reproductorSonidos.js # Sound player and volume control
-    ├── textoCambiante.js   # Animated text initialization
-    └── LIB/
-        └── typed.js        # Third-party typing animation library
+├── index.html              # HTML template
+├── package.json            # Dependencies and scripts
+├── tsconfig.json           # TypeScript configuration
+├── vite.config.ts          # Vite configuration
+└── README.md               # This file
 ```
 
 ## 📋 Features
 
 ### ⏱️ Timer Functionality
-- Customizable countdown timer (hours, minutes, seconds)
-- Intuitive edit mode with +/- controls
-- Play/pause functionality
-- Reset button with proper state management
-- Browser notifications on timer completion
+- ✅ Customizable countdown timer (hours, minutes, seconds)
+- ✅ Intuitive edit mode with +/- controls
+- ✅ Play/pause functionality
+- ✅ Reset button with proper state management
+- ✅ Browser notifications on timer completion
+- ✅ Real-time countdown with accurate timing
 
 ### 🎵 Ambient Sounds
-- **6 Different Soundscapes**: Rain, Forest, Cafe, Garden, Farm, Restaurant
-- Individual volume controls for each sound
-- Play/pause controls for each sound independently
-- Optimized audio playback with error handling
+- ✅ **6 Different Soundscapes**: Rain, Forest, Cafe, Garden, Farm, Restaurant
+- ✅ Individual volume controls for each sound
+- ✅ Play/pause controls for each sound independently
+- ✅ Multiple sounds can play simultaneously
+- ✅ Optimized audio playback with error handling
+- ✅ Smooth volume transitions
 
 ### 🌙 Theme System
-- Day/Night mode toggle
-- Smooth color transitions
-- CSS Custom Properties for dynamic theming
-- Persistent visual feedback
+- ✅ Day/Night mode toggle
+- ✅ Smooth color transitions
+- ✅ CSS Custom Properties for dynamic theming
+- ✅ Persistent visual feedback
+- ✅ Context-based theme management
 
 ### ♿ Accessibility Features
-- ARIA labels and roles for screen readers
-- Keyboard navigation support
-- Focus states for all interactive elements
-- Semantic HTML structure
-- Alt text for all images
+- ✅ ARIA labels and roles for screen readers
+- ✅ Keyboard navigation support
+- ✅ Focus states for all interactive elements
+- ✅ Semantic HTML structure
+- ✅ Alt text for all images
+- ✅ Reduced motion support
 
 ### 📱 Responsive Design
-- Mobile-first approach
-- Adaptive layouts for different screen sizes
-- Touch-friendly controls
-- Optimized for desktop and mobile devices
+- ✅ Mobile-first approach
+- ✅ Adaptive layouts for different screen sizes
+- ✅ Touch-friendly controls
+- ✅ Optimized for desktop, tablet, and mobile devices
+- ✅ Breakpoints: 815px, 500px
 
 ## 🎯 Usage
 
@@ -186,7 +223,7 @@ npm i -g vercel
 # Deploy
 vercel
 ```
-- **Pros**: Zero configuration, automatic HTTPS, global CDN
+- **Pros**: Zero configuration, automatic HTTPS, global CDN, Git integration
 - **Best for**: Quick deployment, personal projects
 
 #### Netlify
@@ -194,58 +231,88 @@ vercel
 # Install Netlify CLI
 npm i -g netlify-cli
 
-# Deploy
+# Build and deploy
+npm run build
 netlify deploy --prod
 ```
 - **Pros**: Drag-and-drop deployment, form handling, serverless functions
 - **Best for**: Static sites with forms or serverless needs
 
 #### GitHub Pages
-1. Push code to GitHub repository
-2. Go to Settings → Pages
-3. Select branch and folder
-4. Site will be available at `username.github.io/repository-name`
+1. Build the project: `npm run build`
+2. Push code to GitHub repository
+3. Go to Settings → Pages
+4. Select branch and folder (`dist`)
+5. Site will be available at `username.github.io/repository-name`
 
 #### Render
 - Connect GitHub repository
 - Select "Static Site"
-- Build command: `echo "No build needed"`
-- Publish directory: `/`
+- Build command: `npm run build`
+- Publish directory: `dist`
 
 #### AWS S3 + CloudFront
-- Upload files to S3 bucket
+- Build the project: `npm run build`
+- Upload `dist` folder to S3 bucket
 - Configure static website hosting
 - Set up CloudFront distribution for CDN
 - **Best for**: Enterprise deployments, custom domains
 
-### Environment Variables
-This project does not require environment variables as it runs entirely client-side.
-
 ## 🛠️ Development
 
-### Code Quality Standards
-- **ES6+ JavaScript** with strict mode
-- **Modular architecture** with separated concerns
-- **JSDoc comments** for function documentation
-- **Error handling** for all async operations
-- **Performance optimization** (efficient event listeners, no unnecessary intervals)
+### Available Scripts
 
-### Recent Improvements
-- ✅ Refactored repetitive code into reusable functions
-- ✅ Optimized volume slider (removed setInterval, using input events)
-- ✅ Fixed timer reset bug
-- ✅ Added notification permission handling
-- ✅ Improved accessibility with ARIA labels
-- ✅ Cleaned up CSS (removed duplicates and empty rules)
-- ✅ Consistent image paths and error handling
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Code Quality Standards
+- ✅ **TypeScript** with strict mode
+- ✅ **ESLint** for code linting
+- ✅ **Modular architecture** with separated concerns
+- ✅ **Custom hooks** for reusable logic
+- ✅ **Context providers** for state management
+- ✅ **Error boundaries** for error handling
+- ✅ **CSS Modules** for scoped styling
+- ✅ **Performance optimization** (efficient hooks, memoization)
+
+### Architecture Decisions
+
+#### Component Structure
+- **Layout Components** - Structure and layout
+- **Feature Components** - Timer, Sound controls
+- **UI Components** - Theme toggle, Animated text
+- **Utility Components** - Error boundary
+
+#### State Management
+- **React Hooks** - `useState`, `useEffect`, `useCallback`, `useRef`
+- **Context API** - Theme management
+- **Custom Hooks** - Timer logic, Audio logic
+
+#### Styling Approach
+- **CSS Modules** - Scoped component styles
+- **CSS Custom Properties** - Dynamic theming
+- **Mobile-First** - Responsive design
 
 ## 📊 Performance
 
-- **No build step required** - Pure vanilla JavaScript
-- **Optimized event handling** - Efficient DOM manipulation
-- **Lazy audio loading** - Audio files loaded on demand
-- **CSS transitions** - Hardware-accelerated animations
-- **Responsive images** - Optimized asset loading
+- ⚡ **Fast Build** - Vite for instant HMR
+- 🎯 **Optimized Bundle** - Code splitting and tree shaking
+- 🚀 **Efficient Rendering** - React hooks optimization
+- 📦 **Asset Optimization** - Public assets for audio files
+- 🎨 **CSS Optimization** - Scoped styles, minimal re-renders
+
+## 🔧 Configuration
+
+### Environment Variables
+This project does not require environment variables as it runs entirely client-side.
+
+### TypeScript Configuration
+TypeScript is configured with strict mode enabled. See `tsconfig.json` for details.
+
+### Vite Configuration
+Vite is configured with React plugin and path aliases. See `vite.config.ts` for details.
 
 ## 🤝 Contributing
 
@@ -275,23 +342,37 @@ See [LICENSE](LICENSE) file for full details.
 
 - [ ] Save timer presets to localStorage
 - [ ] Multiple timer sessions
-- [ ] Sound mixing (play multiple sounds simultaneously)
+- [ ] Sound mixing presets
 - [ ] Timer history and statistics
 - [ ] PWA support for offline use
 - [ ] Custom sound uploads
 - [ ] Pomodoro technique integration
 - [ ] Export timer data
 - [ ] Dark mode based on system preferences
+- [ ] Internationalization (i18n)
+- [ ] Unit and integration tests
+- [ ] E2E testing with Playwright/Cypress
 
 ## 📝 Changelog
 
-### Version 1.0.0 (Current)
-- Initial release
+### Version 2.0.0 (Current)
+- 🎉 Complete React rewrite
+- ✨ TypeScript integration
+- 🏗️ Modern component architecture
+- 🎨 CSS Modules implementation
+- 🪝 Custom hooks for timer and audio
+- 🎭 Context API for theme management
+- ♿ Enhanced accessibility features
+- 📱 Improved responsive design
+- 🚀 Performance optimizations
+- 🛡️ Error boundaries and error handling
+
+### Version 1.0.0
+- Initial vanilla JavaScript release
 - Timer functionality
 - Ambient sounds player
 - Day/Night theme switching
-- Accessibility improvements
-- Performance optimizations
+- Basic accessibility improvements
 
 ---
 

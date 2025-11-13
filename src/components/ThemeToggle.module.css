@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  background: linear-gradient(135deg, var(--color-btn-dia-noche) 0%, #d4db80 100%);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.button:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.button:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.button:active {
+  transform: scale(0.95) rotate(0deg);
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  filter: invert();
+  position: relative;
+  z-index: 1;
+  transition: transform var(--transition-base);
+}
+
+.button:hover .icon {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+@media screen and (max-width: 500px) {
+  .button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
