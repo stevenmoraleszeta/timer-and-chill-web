@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTimer } from '../hooks/useTimer'
+import { TIMER_PRESETS } from '../constants'
 import playIcon from '../assets/images/play.png'
 import stopIcon from '../assets/images/detener.png'
 import editIcon from '../assets/images/boligrafo.png'
@@ -11,15 +12,139 @@ export const Timer: React.FC = () => {
     formattedTime,
     isRunning,
     isEditing,
+    isPomodoroMode,
+    isBreak,
+    pomodoroSessionCount,
+    progress,
     toggle,
     reset,
     adjustTime,
     toggleEdit,
+    setPreset,
+    startPomodoro,
+    stopPomodoro,
   } = useTimer()
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Ignore if user is typing in an input
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        e.target instanceof HTMLButtonElement
+      ) {
+        return
+      }
+
+      switch (e.key) {
+        case ' ':
+        case 'Enter':
+          e.preventDefault()
+          toggle()
+          break
+        case 'r':
+        case 'R':
+          e.preventDefault()
+          reset()
+          break
+        case 'e':
+        case 'E':
+          e.preventDefault()
+          toggleEdit()
+          break
+        case 'p':
+        case 'P':
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault()
+            if (isPomodoroMode) {
+              stopPomodoro()
+            } else {
+              startPomodoro()
+            }
+          }
+          break
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [toggle, reset, toggleEdit, startPomodoro, stopPomodoro, isPomodoroMode])
 
   return (
     <div className={styles.container}>
+      {/* Pomodoro indicator */}
+      {isPomodoroMode && (
+        <div className={styles.pomodoroIndicator}>
+          <span className={styles.pomodoroLabel}>
+            {isBreak ? 'Break' : 'Work'} - Session {pomodoroSessionCount + (isBreak ? 0 : 1)}
+          </span>
+          {!isBreak && (
+            <button
+              className={styles.stopPomodoroButton}
+              onClick={stopPomodoro}
+              aria-label="Stop Pomodoro"
+            >
+              Stop
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Timer presets */}
+      {!isEditing && !isRunning && (
+        <div className={styles.presets}>
+          <div className={styles.presetsLabel}>Quick Presets:</div>
+          <div className={styles.presetsButtons}>
+            {TIMER_PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                className={styles.presetButton}
+                onClick={() => setPreset(preset.minutes)}
+                aria-label={`Set timer to ${preset.label}`}
+              >
+                {preset.label}
+              </button>
+            ))}
+            {!isPomodoroMode && (
+              <button
+                className={`${styles.presetButton} ${styles.pomodoroButton}`}
+                onClick={startPomodoro}
+                aria-label="Start Pomodoro timer"
+              >
+                🍅 Pomodoro
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className={styles.timer}>
+        {/* Progress ring */}
+        <div className={styles.progressRing}>
+          <svg className={styles.progressSvg} viewBox="0 0 100 100">
+            <circle
+              className={styles.progressBackground}
+              cx="50"
+              cy="50"
+              r="45"
+              fill="none"
+              strokeWidth="8"
+            />
+            <circle
+              className={styles.progressBar}
+              cx="50"
+              cy="50"
+              r="45"
+              fill="none"
+              strokeWidth="8"
+              strokeDasharray={`${2 * Math.PI * 45}`}
+              strokeDashoffset={`${2 * Math.PI * 45 * (1 - progress / 100)}`}
+              transform="rotate(-90 50 50)"
+            />
+          </svg>
+        </div>
+
         {isEditing && (
           <div className={styles.adjustButtonsTop}>
             <button
@@ -79,6 +204,7 @@ export const Timer: React.FC = () => {
           className={styles.resetButton}
           onClick={reset}
           aria-label="Reset timer"
+          title="Reset (R)"
         >
           0:00
         </button>
@@ -86,6 +212,7 @@ export const Timer: React.FC = () => {
           className={styles.editButton}
           onClick={toggleEdit}
           aria-label={isEditing ? 'Save timer' : 'Edit timer'}
+          title="Edit (E)"
         >
           <img
             className={styles.icon}
@@ -97,6 +224,7 @@ export const Timer: React.FC = () => {
           className={styles.playButton}
           onClick={toggle}
           aria-label={isRunning ? 'Pause timer' : 'Start timer'}
+          title={isRunning ? 'Pause (Space)' : 'Start (Space)'}
         >
           <img
             className={styles.icon}

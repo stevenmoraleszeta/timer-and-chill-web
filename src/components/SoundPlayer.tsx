@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAudio } from '../hooks/useAudio'
+import { useSoundContext } from '../contexts/SoundContext'
 import playIcon from '../assets/images/play.png'
 import stopIcon from '../assets/images/detener.png'
 import styles from './SoundPlayer.module.css'
@@ -17,7 +18,28 @@ export const SoundPlayer: React.FC<SoundPlayerProps> = ({
   audioSrc,
   defaultVolume = 50,
 }) => {
-  const { isPlaying, volume, setVolume, toggle } = useAudio(id, audioSrc, defaultVolume)
+  const { isPlaying, volume, setVolume, toggle, play, pause } = useAudio(id, audioSrc, defaultVolume)
+  const { registerSound, unregisterSound } = useSoundContext()
+
+  // Register this sound with the context
+  useEffect(() => {
+    registerSound(id, {
+      setVolume,
+      setPlaying: (playing: boolean) => {
+        if (playing) {
+          play()
+        } else {
+          pause()
+        }
+      },
+      getVolume: () => volume,
+      getPlaying: () => isPlaying,
+    })
+
+    return () => {
+      unregisterSound(id)
+    }
+  }, [id, setVolume, play, pause, volume, isPlaying, registerSound, unregisterSound])
 
   return (
     <div className={`${styles.container} ${isPlaying ? styles.playing : ''}`}>

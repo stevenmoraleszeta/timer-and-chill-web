@@ -8,6 +8,99 @@
   padding: var(--spacing-lg);
 }
 
+/* Pomodoro indicator */
+.pomodoroIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 159, 64, 0.2) 100%);
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(255, 107, 107, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.pomodoroLabel {
+  font-weight: 600;
+  color: var(--color-btns-reloj);
+  font-size: 0.9rem;
+}
+
+.stopPomodoroButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(255, 107, 107, 0.3);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  border-radius: var(--radius-md);
+  color: var(--color-btns-reloj);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.stopPomodoroButton:hover {
+  background: rgba(255, 107, 107, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Timer presets */
+.presets {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.presetsLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-btns-reloj);
+  opacity: 0.8;
+}
+
+.presetsButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  width: 100%;
+}
+
+.presetButton {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--color-btns-reloj);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-width: 60px;
+}
+
+.presetButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.presetButton:active {
+  transform: translateY(0);
+}
+
+.pomodoroButton {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.3) 0%, rgba(255, 159, 64, 0.3) 100%);
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+.pomodoroButton:hover {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.5) 0%, rgba(255, 159, 64, 0.5) 100%);
+}
+
 .timer {
   position: relative;
   width: 420px;
@@ -23,6 +116,33 @@
   box-shadow: var(--shadow-xl), inset 0 0 30px rgba(255, 255, 255, 0.3);
   transition: all var(--transition-base);
   padding: var(--spacing-xl);
+}
+
+/* Progress ring */
+.progressRing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.progressSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progressBackground {
+  stroke: rgba(0, 0, 0, 0.1);
+  transition: stroke var(--transition-base);
+}
+
+.progressBar {
+  stroke: var(--color-segundero);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease, stroke var(--transition-base);
 }
 
 .adjustButtonsTop {

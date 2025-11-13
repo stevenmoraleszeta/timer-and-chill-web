@@ -1,7 +1,23 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Time } from '../types'
-import { MAX_HOURS, MAX_MINUTES, MAX_SECONDS, TIMER_INTERVAL } from '../constants'
-import { formatTime, requestNotificationPermission, showNotification, storage } from '../utils'
+import {
+  MAX_HOURS,
+  MAX_MINUTES,
+  MAX_SECONDS,
+  TIMER_INTERVAL,
+  POMODORO_WORK_MINUTES,
+  POMODORO_SHORT_BREAK_MINUTES,
+  POMODORO_LONG_BREAK_MINUTES,
+  POMODORO_SESSIONS_BEFORE_LONG_BREAK,
+} from '../constants'
+import {
+  formatTime,
+  requestNotificationPermission,
+  showNotification,
+  storage,
+  timeToSeconds,
+  secondsToTime,
+} from '../utils'
 
 const INITIAL_TIME: Time = { hours: 0, minutes: 0, seconds: 0 }
 
@@ -10,11 +26,17 @@ export const useTimer = () => {
   const savedTime = storage.getTimerTime()
   const savedRunning = storage.getTimerRunning()
   const savedEditing = storage.getTimerEditing()
+  const pomodoroState = storage.getPomodoroState()
+  const savedInitialTime = storage.getInitialTime()
 
   const [time, setTime] = useState<Time>(savedTime || INITIAL_TIME)
+  const [initialTime, setInitialTime] = useState<Time>(savedInitialTime || savedTime || INITIAL_TIME)
   // Don't restore running state - pause timer on refresh for safety
   const [isRunning, setIsRunning] = useState(false)
   const [isEditing, setIsEditing] = useState(savedEditing || false)
+  const [isPomodoroMode, setIsPomodoroMode] = useState(pomodoroState.isPomodoroMode)
+  const [pomodoroSessionCount, setPomodoroSessionCount] = useState(pomodoroState.sessionCount)
+  const [isBreak, setIsBreak] = useState(pomodoroState.isBreak)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const isInitialMount = useRef(true)
 
@@ -62,7 +84,59 @@ export const useTimer = () => {
           } else {
             // Timer finished
             setIsRunning(false)
-            showNotification('Timer Complete', '¡El tiempo ha terminado!')
+            const completedDuration = timeToSeconds(initialTime)
+            storage.addTimerCompletion(completedDuration)
+
+            if (isPomodoroMode) {
+              // Handle Pomodoro completion
+              if (!isBreak) {
+                // Work session completed
+                const newSessionCount = pomodoroSessionCount + 1
+                setPomodoroSessionCount(newSessionCount)
+                storage.setPomodoroState({
+                  sessionCount: newSessionCount,
+                  isPomodoroMode: true,
+                  isBreak: true,
+                })
+
+                // Start break
+                const breakMinutes =
+                  newSessionCount % POMODORO_SESSIONS_BEFORE_LONG_BREAK === 0
+                    ? POMODORO_LONG_BREAK_MINUTES
+                    : POMODORO_SHORT_BREAK_MINUTES
+                const breakTime = secondsToTime(breakMinutes * 60)
+                setTime(breakTime)
+                setInitialTime(breakTime)
+                storage.setInitialTime(breakTime)
+                setIsBreak(true)
+                showNotification(
+                  'Break Time!',
+                  `Take a ${breakMinutes}-minute break. Session ${newSessionCount} completed!`
+                )
+                // Auto-start break
+                setTimeout(() => setIsRunning(true), 1000)
+              } else {
+                // Break completed, start next work session
+                setIsBreak(false)
+                const workTime = secondsToTime(POMODORO_WORK_MINUTES * 60)
+                setTime(workTime)
+                setInitialTime(workTime)
+                storage.setInitialTime(workTime)
+                storage.setPomodoroState({
+                  sessionCount: pomodoroSessionCount,
+                  isPomodoroMode: true,
+                  isBreak: false,
+                })
+                showNotification('Work Time!', 'Time to focus!')
+                // Auto-start work session
+                setTimeout(() => setIsRunning(true), 1000)
+              }
+            } else {
+              showNotification('Timer Complete', '¡El tiempo ha terminado!')
+              setTime(INITIAL_TIME)
+              setInitialTime(INITIAL_TIME)
+              storage.setInitialTime(INITIAL_TIME)
+            }
             return INITIAL_TIME
           }
         })
@@ -79,13 +153,20 @@ export const useTimer = () => {
         clearInterval(intervalRef.current)
       }
     }
-  }, [isRunning])
+  }, [isRunning, isPomodoroMode, isBreak, pomodoroSessionCount, initialTime])
 
   const start = useCallback(() => {
     if (time.hours > 0 || time.minutes > 0 || time.seconds > 0) {
+      // Save initial time when starting (only if not already set or if time changed)
+      const currentInitialSeconds = timeToSeconds(initialTime)
+      const currentTimeSeconds = timeToSeconds(time)
+      if (!isRunning && (currentInitialSeconds === 0 || currentInitialSeconds !== currentTimeSeconds)) {
+        setInitialTime(time)
+        storage.setInitialTime(time)
+      }
       setIsRunning(true)
     }
-  }, [time])
+  }, [time, isRunning, initialTime])
 
   const pause = useCallback(() => {
     setIsRunning(false)
@@ -94,7 +175,19 @@ export const useTimer = () => {
   const reset = useCallback(() => {
     setIsRunning(false)
     setTime(INITIAL_TIME)
-  }, [])
+    setInitialTime(INITIAL_TIME)
+    storage.setInitialTime(INITIAL_TIME)
+    if (isPomodoroMode) {
+      setIsPomodoroMode(false)
+      setIsBreak(false)
+      setPomodoroSessionCount(0)
+      storage.setPomodoroState({
+        sessionCount: 0,
+        isPomodoroMode: false,
+        isBreak: false,
+      })
+    }
+  }, [isPomodoroMode])
 
   const toggle = useCallback(() => {
     if (isRunning) {
@@ -130,23 +223,91 @@ export const useTimer = () => {
     setIsEditing((prev) => !prev)
   }, [])
 
+  const setPreset = useCallback((minutes: number) => {
+    const presetTime = secondsToTime(minutes * 60)
+    setTime(presetTime)
+    setInitialTime(presetTime)
+    storage.setInitialTime(presetTime)
+    setIsRunning(false)
+    setIsEditing(false)
+  }, [])
+
+  const startPomodoro = useCallback(() => {
+    setIsPomodoroMode(true)
+    setIsBreak(false)
+    setPomodoroSessionCount(0)
+    const workTime = secondsToTime(POMODORO_WORK_MINUTES * 60)
+    setTime(workTime)
+    setInitialTime(workTime)
+    storage.setInitialTime(workTime)
+    storage.setPomodoroState({
+      sessionCount: 0,
+      isPomodoroMode: true,
+      isBreak: false,
+    })
+    setIsRunning(false)
+    setIsEditing(false)
+  }, [])
+
+  const stopPomodoro = useCallback(() => {
+    setIsPomodoroMode(false)
+    setIsBreak(false)
+    setPomodoroSessionCount(0)
+    storage.setPomodoroState({
+      sessionCount: 0,
+      isPomodoroMode: false,
+      isBreak: false,
+    })
+  }, [])
+
+  // Calculate progress percentage
+  const progress = useCallback(() => {
+    if (initialTime.hours === 0 && initialTime.minutes === 0 && initialTime.seconds === 0) {
+      return 0
+    }
+    const initialSeconds = timeToSeconds(initialTime)
+    const currentSeconds = timeToSeconds(time)
+    const elapsed = initialSeconds - currentSeconds
+    return Math.min(100, Math.max(0, (elapsed / initialSeconds) * 100))
+  }, [time, initialTime])
+
   const formattedTime = {
     hours: formatTime(time.hours),
     minutes: formatTime(time.minutes),
     seconds: formatTime(time.seconds),
   }
 
+  // Save Pomodoro state
+  useEffect(() => {
+    if (isInitialMount.current) {
+      return
+    }
+    storage.setPomodoroState({
+      sessionCount: pomodoroSessionCount,
+      isPomodoroMode,
+      isBreak,
+    })
+  }, [pomodoroSessionCount, isPomodoroMode, isBreak])
+
   return {
     time,
+    initialTime,
     formattedTime,
     isRunning,
     isEditing,
+    isPomodoroMode,
+    isBreak,
+    pomodoroSessionCount,
+    progress: progress(),
     start,
     pause,
     reset,
     toggle,
     adjustTime,
     toggleEdit,
+    setPreset,
+    startPomodoro,
+    stopPomodoro,
   }
 }
 

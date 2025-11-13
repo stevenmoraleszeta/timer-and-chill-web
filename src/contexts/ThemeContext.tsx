@@ -24,9 +24,31 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  // Load theme from localStorage
+  // Detect system theme preference
+  const getSystemTheme = (): Theme => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'night'
+    }
+    return 'day'
+  }
+
+  // Load theme from localStorage or use system preference
   const savedTheme = storage.getTheme()
-  const [theme, setTheme] = useState<Theme>(savedTheme || 'day')
+  const [theme, setTheme] = useState<Theme>(savedTheme || getSystemTheme())
+
+  // Listen for system theme changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only auto-update if user hasn't manually set a preference
+      if (!savedTheme) {
+        setTheme(e.matches ? 'night' : 'day')
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [savedTheme])
 
   const colors = THEME_COLORS[theme]
 

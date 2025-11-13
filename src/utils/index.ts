@@ -81,6 +81,9 @@ const STORAGE_KEYS = {
   SOUNDS_VOLUME: 'timer-and-chill:sounds-volume',
   SOUNDS_PLAYING: 'timer-and-chill:sounds-playing',
   THEME: 'timer-and-chill:theme',
+  TIMER_STATISTICS: 'timer-and-chill:timer-statistics',
+  POMODORO_STATE: 'timer-and-chill:pomodoro-state',
+  INITIAL_TIME: 'timer-and-chill:initial-time',
 }
 
 export const storage = {
@@ -204,6 +207,103 @@ export const storage = {
       localStorage.setItem(STORAGE_KEYS.THEME, theme)
     } catch (error) {
       console.warn('Failed to save theme to localStorage:', error)
+    }
+  },
+
+  // Timer statistics
+  getTimerStatistics: (): {
+    totalCompleted: number
+    totalTime: number // in seconds
+    lastCompleted: string | null
+    sessions: Array<{ date: string; duration: number }>
+  } => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.TIMER_STATISTICS)
+      if (stored) {
+        return JSON.parse(stored)
+      }
+    } catch (error) {
+      console.warn('Failed to load timer statistics from localStorage:', error)
+    }
+    return {
+      totalCompleted: 0,
+      totalTime: 0,
+      lastCompleted: null,
+      sessions: [],
+    }
+  },
+
+  addTimerCompletion: (duration: number): void => {
+    try {
+      const stats = storage.getTimerStatistics()
+      stats.totalCompleted += 1
+      stats.totalTime += duration
+      stats.lastCompleted = new Date().toISOString()
+      stats.sessions.push({
+        date: new Date().toISOString(),
+        duration,
+      })
+      // Keep only last 100 sessions
+      if (stats.sessions.length > 100) {
+        stats.sessions = stats.sessions.slice(-100)
+      }
+      localStorage.setItem(STORAGE_KEYS.TIMER_STATISTICS, JSON.stringify(stats))
+    } catch (error) {
+      console.warn('Failed to save timer statistics to localStorage:', error)
+    }
+  },
+
+  // Initial time for progress calculation
+  getInitialTime: (): { hours: number; minutes: number; seconds: number } | null => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.INITIAL_TIME)
+      if (stored) {
+        return JSON.parse(stored)
+      }
+    } catch (error) {
+      console.warn('Failed to load initial time from localStorage:', error)
+    }
+    return null
+  },
+
+  setInitialTime: (time: { hours: number; minutes: number; seconds: number }): void => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.INITIAL_TIME, JSON.stringify(time))
+    } catch (error) {
+      console.warn('Failed to save initial time to localStorage:', error)
+    }
+  },
+
+  // Pomodoro state
+  getPomodoroState: (): {
+    sessionCount: number
+    isPomodoroMode: boolean
+    isBreak: boolean
+  } => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.POMODORO_STATE)
+      if (stored) {
+        return JSON.parse(stored)
+      }
+    } catch (error) {
+      console.warn('Failed to load Pomodoro state from localStorage:', error)
+    }
+    return {
+      sessionCount: 0,
+      isPomodoroMode: false,
+      isBreak: false,
+    }
+  },
+
+  setPomodoroState: (state: {
+    sessionCount: number
+    isPomodoroMode: boolean
+    isBreak: boolean
+  }): void => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.POMODORO_STATE, JSON.stringify(state))
+    } catch (error) {
+      console.warn('Failed to save Pomodoro state to localStorage:', error)
     }
   },
 }

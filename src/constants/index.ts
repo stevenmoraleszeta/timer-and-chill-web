@@ -3,6 +3,24 @@ export const MAX_MINUTES = 59
 export const MAX_SECONDS = 59
 export const TIMER_INTERVAL = 1000
 
+// Timer presets (in minutes)
+export const TIMER_PRESETS = [
+  { label: '5 min', minutes: 5 },
+  { label: '10 min', minutes: 10 },
+  { label: '15 min', minutes: 15 },
+  { label: '25 min', minutes: 25 },
+  { label: '30 min', minutes: 30 },
+  { label: '45 min', minutes: 45 },
+  { label: '60 min', minutes: 60 },
+  { label: '90 min', minutes: 90 },
+]
+
+// Pomodoro settings
+export const POMODORO_WORK_MINUTES = 25
+export const POMODORO_SHORT_BREAK_MINUTES = 5
+export const POMODORO_LONG_BREAK_MINUTES = 15
+export const POMODORO_SESSIONS_BEFORE_LONG_BREAK = 4
+
 export const ACTIVITIES = [
   'Studying',
   'Reading',
@@ -49,6 +67,47 @@ export const SOUNDS = [
     name: 'Restaurant',
     audioSrc: '/audio/sonidoRestaurante.mp3',
     defaultVolume: 50,
+  },
+]
+
+// Sound mixing presets
+export const SOUND_PRESETS = [
+  {
+    id: 'focus',
+    name: 'Focus',
+    description: 'Perfect for deep work',
+    sounds: [
+      { id: 'rain', volume: 60 },
+      { id: 'forest', volume: 40 },
+    ],
+  },
+  {
+    id: 'cafe',
+    name: 'Coffee Shop',
+    description: 'Cafe ambiance',
+    sounds: [
+      { id: 'cafe', volume: 70 },
+      { id: 'restaurant', volume: 30 },
+    ],
+  },
+  {
+    id: 'nature',
+    name: 'Nature',
+    description: 'Natural sounds',
+    sounds: [
+      { id: 'garden', volume: 50 },
+      { id: 'farm', volume: 50 },
+      { id: 'rain', volume: 30 },
+    ],
+  },
+  {
+    id: 'relax',
+    name: 'Relax',
+    description: 'Calming atmosphere',
+    sounds: [
+      { id: 'forest', volume: 60 },
+      { id: 'rain', volume: 40 },
+    ],
   },
 ]
 
