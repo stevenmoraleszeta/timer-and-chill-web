@@ -34,7 +34,7 @@ export const Statistics: React.FC = () => {
   const closePanel = useCallback(() => {
     setIsOpen(false)
   }, [])
-
+ 
   return (
     <div className={styles.container}>
       <button
